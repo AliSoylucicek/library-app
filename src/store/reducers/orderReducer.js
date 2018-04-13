@@ -5,6 +5,9 @@ const initialState = {
     cart: [
         { id: 0, name: "A Hunter's Story", category: 'Adventure', rating: 4, price: 5.49, description: "A book description.", alreadyAdded: "true" },
     ],
+    myBooks: [
+
+    ],
     itemCount: 1,
     totalPrice: 5.49,
     wallet: 5
@@ -42,10 +45,13 @@ const purchaseItems = (state, action) => {
 
 const purchaseSuccess = (state, action) => {
     const newCart = [];
-    const updatedState = {
-        cart: newCart
-    }
-    return updateObject(state, updatedState);
+    const newMyBooks = state.myBooks.concat(state.cart);
+    return updateObject(state, {
+        cart: [],
+        myBooks: newMyBooks,
+        itemCount: 0,
+        totalPrice: 0
+    })
 }
 
 const purchaseFail = (state, action) => {
@@ -58,12 +64,19 @@ const addMoreFunds = (state, action) => {
     });
 }
 
+const fetchMyBooks = (state, action) => {
+    return updateObject(state, {
+        myBooks: state.myBooks
+    })
+}
+
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.ADD_TO_CART: return addToCart(state, action);
         case actionTypes.FETCH_CART_ITEMS: return fetchCartItems(state, action);
         case actionTypes.ADD_MORE_FUNDS: return addMoreFunds(state, action);
         case actionTypes.PURCHASE_ITEMS: return purchaseItems(state, action);
+        case actionTypes.FETCH_MY_BOOKS: return fetchMyBooks(state, action);
         default: return state;
     }
 };

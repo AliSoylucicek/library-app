@@ -5,23 +5,19 @@ import './BrowserBook.css';
 
 const browserBook = (props) => {
 
-    let buttons = (
-        <Button.Group fluid widths={2}>
-                        <Button onClick={props.addClicked} basic positive>
-                            Add to Cart
-                        </Button>
-                        <Button onClick={props.detailClicked} basic primary>
-                            Details
-                        </Button>
-                    </Button.Group>
+    let button = (
+        <Button onClick={props.detailClicked} basic primary fluid>
+            Details
+        </Button>
+
     );
 
-    if(props.alreadyAdded === "true")
-        buttons = (
-        <Button basic color="green" fluid onClick={props.detailClicked}>
-            Already Added
-        </Button>
-    );
+    if (props.alreadyAdded === "true")
+        button = (
+            <Button basic color="green" fluid onClick={props.detailClicked}>
+                Already Added
+            </Button>
+        );
 
     return (
         <Grid.Column stretched mobile={16} tablet={8} computer={4}>
@@ -50,7 +46,7 @@ const browserBook = (props) => {
                     </Card.Description>
                 </Card.Content>
                 <Card.Content extra>
-                    {buttons}
+                    {button}
                 </Card.Content>
             </Card>
         </Grid.Column>

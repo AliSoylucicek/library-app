@@ -9,10 +9,6 @@
 }
 
 .ui.container.pushable{
-    height: 100vh;
-}
-
-.pushable>.pusher{
-    height: 100%;   
+    min-width: 100%;
 }
 

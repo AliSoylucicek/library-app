@@ -4,6 +4,7 @@ export const ADD_MORE_FUNDS = 'ADD_MORE_FUNDS';
 export const PURCHASE_ITEMS = 'PURCHASE_ITEMS';
 export const PURCHASE_SUCCESS = 'PURCHASE_SUCCESS';
 export const PURCHASE_FAIL = 'PURCHASE_FAIL';
+export const FETCH_MY_BOOKS = 'FETCH_MY_BOOKS';
 
 export const FETCH_STORE_ITEMS = 'FETCH_STORE_ITEMS';
 export const FETCH_BOOK = 'FETCH_BOOK';

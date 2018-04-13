@@ -9,7 +9,7 @@ class BookBrowser extends Component {
 
     render(){
         return (
-            <Grid as={Container} attached="bottom">
+            <Grid as={Container} attached="bottom" doubling>
                 {this.props.books.map(book => (
                     <BrowserBook
                         key={book.id}
@@ -19,7 +19,6 @@ class BookBrowser extends Component {
                         price={book.price}
                         rating={book.rating}
                         alreadyAdded={book.alreadyAdded}
-                        addClicked={()=>this.props.onAddToCart(book.id)}
                         detailClicked={()=>this.props.goToItem(book.id)} />
                 ))}
             </Grid>

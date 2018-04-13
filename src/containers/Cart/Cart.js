@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Segment, Grid, GridColumn, Header, Container, Button } from 'semantic-ui-react';
+import { Segment, Grid, Header, Button, Container } from 'semantic-ui-react';
 
 import * as actions from '../../store/actions/orderActions';
 import ErrorHeader from '../../components/UI/ErrorHeader/ErrorHeader';
@@ -77,7 +77,7 @@ class Cart extends Component {
             );
         }
         return (
-            <div>{component}</div>
+            <div style={{minHeight: "100vh"}}>{component}</div>
         );
     }
 }

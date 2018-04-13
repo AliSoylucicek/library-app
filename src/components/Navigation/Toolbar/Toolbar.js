@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Menu, Icon, Label } from 'semantic-ui-react';
 import {connect} from 'react-redux';
 
-
 import NavigationItem from '../NavigationItem/NavigationItem';
 
 class Toolbar extends Component {
@@ -23,9 +22,7 @@ class Toolbar extends Component {
                         <NavigationItem link="/cart" exact>
                             <Icon name="shopping bag" size="large" inverted/>
                             {this.props.itemCount > 0 ? <Label circular size="tiny" color="red" floating>{this.props.itemCount}</Label> : null}
-                            
                         </NavigationItem>
-                        
                     </Menu.Menu>
                 </Menu>
                 {this.props.children}

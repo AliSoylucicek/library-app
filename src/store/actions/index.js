@@ -4,7 +4,8 @@ export {
     addMoreFunds,
     purchaseItems,
     purchaseSuccess,
-    purchaseFail
+    purchaseFail,
+    fetchMyBooks
 } from './orderActions';
 
 export {

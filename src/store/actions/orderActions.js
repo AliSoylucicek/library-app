@@ -39,5 +39,11 @@ export const purchaseFail = () => {
     };
 };
 
+export const fetchMyBooks = () => {
+    return {
+        type: actionTypes.FETCH_MY_BOOKS
+    };
+};
+
 
 

@@ -14,7 +14,7 @@ class BookDetail extends Component {
         this.props.onFetchBook(+this.props.match.params.id);
     }
 
-    addToCart (id) {
+    addToCart(id) {
         this.props.onAddToCart(this.props.book.id)
         this.props.onFetchBook(+this.props.match.params.id);
     }
@@ -36,42 +36,38 @@ class BookDetail extends Component {
                 </Label>
             </Button>
         );
-        
-        if(this.props.book.alreadyAdded === "true")
-         itemButton = <Button basic color="green" floated="right">Already Added</Button>
+
+        if (this.props.book.alreadyAdded === "true")
+            itemButton = <Button basic color="green" floated="right">Added to Cart</Button>
 
         if (this.props.book.hasOwnProperty('name')) {
             bookDetail = (
-                <Item.Group>
-                    <Item>
-                        <Item.Image>
-                            <Icon name="book" size="massive" fitted style={{ marginLeft: "20px" }} />
-                        </Item.Image>
+                <Item>
+                    <Item.Image>
+                        <Icon name="book" size="massive" fitted style={{ marginLeft: "20px" }} />
+                    </Item.Image>
 
-                        <Item.Content>
-                            <Item.Header >{this.props.book.name}</Item.Header>
-                            <Label style={{ marginLeft: "1em" }}>
-                                {this.props.book.category}
-                            </Label>
+                    <Item.Content>
+                        <Item.Header >{this.props.book.name}</Item.Header>
+                        <Label style={{ marginLeft: "1em" }}>
+                            {this.props.book.category}
+                        </Label>
 
-                            <Item.Meta>{this.props.book.author}</Item.Meta>
-                            <Item.Description>
-                                {this.props.book.description}
-                            </Item.Description>
+                        <Item.Meta>{this.props.book.author}</Item.Meta>
+                        <Item.Description>
+                            {this.props.book.description}
+                        </Item.Description>
 
-                            <Item.Extra>
-                                <Rating icon='star' rating={this.props.book.rating} maxRating={5} />
+                        <Item.Extra>
+                            <Rating icon='star' rating={this.props.book.rating} maxRating={5} />
 
-                            </Item.Extra>
-                            <Item.Extra>
-                                {itemButton}
-                            </Item.Extra>
+                        </Item.Extra>
+                        <Item.Extra>
+                            {itemButton}
+                        </Item.Extra>
 
-                        </Item.Content>
-                    </Item>
-                </Item.Group>
-
-
+                    </Item.Content>
+                </Item>
             );
         }
 

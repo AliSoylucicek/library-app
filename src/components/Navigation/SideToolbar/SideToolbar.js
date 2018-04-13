@@ -36,7 +36,6 @@ class SideToolbar extends Component {
 
     return (
       <Sidebar.Pushable as={Container} style={this.state.style}>
-        
         <Sidebar as={Menu} animation='overlay' width='very thin' visible={visible} icon='labeled' vertical inverted >
           <NavigationItem onClick={this.handlePusherClick} link="/" name="Home" exact></NavigationItem>
           <NavigationItem onClick={this.handlePusherClick} link="/store" name="Store" exact></NavigationItem>
@@ -55,7 +54,6 @@ class SideToolbar extends Component {
           </Menu>
           {this.props.children}
         </Sidebar.Pusher>
-
       </Sidebar.Pushable>
     )
   }

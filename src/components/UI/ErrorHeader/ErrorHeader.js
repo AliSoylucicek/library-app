@@ -1,9 +1,11 @@
 import React from 'react';
 import { Header, Icon, Segment } from 'semantic-ui-react';
 
+import './ErrorHeader.css';
+
 const errorHeader = (props) => {
     return (
-        <Segment compact padded basic style={{ margin: "25vh auto" }}>
+        <Segment basic>
             <Header as='h2' icon textAlign="center">
                 <Icon name={props.icon} />
                 {props.header}
@@ -12,7 +14,6 @@ const errorHeader = (props) => {
                 </Header.Subheader>
             </Header>
         </Segment>
-
     );
 };
 
