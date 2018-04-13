@@ -1,0 +1,9 @@
+.ui.card{
+    min-height: 290px;
+    width: 100%;
+}
+/*
+.ui.card:hover{
+    box-shadow: 1px 1px 3px blue;
+}
+*/

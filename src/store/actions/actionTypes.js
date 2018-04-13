@@ -1,0 +1,10 @@
+export const ADD_TO_CART = 'ADD_TO_CART';
+export const FETCH_CART_ITEMS = 'FETCH_CART_ITEMS';
+export const ADD_MORE_FUNDS = 'ADD_MORE_FUNDS';
+export const PURCHASE_ITEMS = 'PURCHASE_ITEMS';
+export const PURCHASE_SUCCESS = 'PURCHASE_SUCCESS';
+export const PURCHASE_FAIL = 'PURCHASE_FAIL';
+
+export const FETCH_STORE_ITEMS = 'FETCH_STORE_ITEMS';
+export const FETCH_BOOK = 'FETCH_BOOK';
+export const UPDATE_BOOK = 'UPDATE_BOOK';
