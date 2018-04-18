@@ -14,11 +14,11 @@ class BookDetail extends Component {
         this.props.onFetchBook(+this.props.match.params.id);
     }
 
-    addToCart(id) {
-        this.props.onAddToCart(this.props.book.id)
-        this.props.onFetchBook(+this.props.match.params.id);
+    addToCartHandler() {
+        this.props.onAddToCart(this.props.book.id,this.props.book);
+        this.props.onUpdateBook(this.props.book.id)
+        this.props.onFetchBook(this.props.book.id);
     }
-
 
     render() {
 
@@ -27,7 +27,7 @@ class BookDetail extends Component {
         );
 
         let itemButton = (
-            <Button as="div" floated="right" labelPosition='right' onClick={() => this.addToCart(this.props.book.id)}>
+            <Button as="div" floated="right" labelPosition='right' onClick={() => this.addToCartHandler()}>
                 <Button color="blue">
                     Add To Cart
             </Button>
@@ -79,13 +79,16 @@ class BookDetail extends Component {
 
 const mapStateToProps = state => {
     return {
-        book: state.store.currentBook
+        book: state.store.currentBook,
+        storeItems: state.store.storeItems
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        onFetchBook: (id) => dispatch(actions.fetchBook(id))
+        onFetchBook: (id) => dispatch(actions.fetchBook(id)),
+        onUpdateBook: (id) => dispatch(actions.updateBook(id)),
+        onAddToCart: (bookId, bookData) => dispatch(actions.addToCart(bookId, bookData)),
     };
 };
 

@@ -10,6 +10,7 @@ export {
 
 export {
     fetchStoreItems,
+    filterStoreItems,
     fetchBook,
     updateBook
 } from './storeActions';

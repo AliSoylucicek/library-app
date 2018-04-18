@@ -15,6 +15,7 @@ const initialState = {
 
 const addToCart = (state, action) => {
     const newPrice = state.totalPrice + action.bookData.price;
+    console.log(action.bookData);
     return updateObject(state, {
         cart: state.cart.concat(action.bookData),
         itemCount: state.itemCount + 1,
@@ -44,7 +45,6 @@ const purchaseItems = (state, action) => {
 }
 
 const purchaseSuccess = (state, action) => {
-    const newCart = [];
     const newMyBooks = state.myBooks.concat(state.cart);
     return updateObject(state, {
         cart: [],

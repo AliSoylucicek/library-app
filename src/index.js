@@ -18,6 +18,8 @@ const rootReducer = combineReducers({
     store: storeReducer
 })
 
+//const mobileStore = createStore(rootReducer);
+
 const store = createStore(rootReducer, composeEnhancers(
     applyMiddleware(thunk)
 ));

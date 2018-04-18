@@ -6,6 +6,31 @@ export const fetchStoreItems = () => {
     };
 };
 
+export const filterStore = (filterOptions) => {
+    return {
+        type: actionTypes.FILTER_STORE_ITEMS,
+        filterOptions: filterOptions
+    };
+}
+
+export const filterStoreItems = (filterOptions) => {
+    return dispatch => {
+        dispatch(filterStoreStart())
+        setTimeout(() => {
+            dispatch(filterStore(filterOptions));
+            dispatch(filterStoreComplete());
+        }, 1000);
+    };
+};
+
+const filterStoreStart = () => {
+    return { type: actionTypes.FILTER_STORE_START };
+}
+
+const filterStoreComplete = () => {
+    return { type: actionTypes.FILTER_STORE_COMPLETE };
+}
+
 export const fetchBook = (id) => {
     return {
         type: actionTypes.FETCH_BOOK,

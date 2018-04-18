@@ -14,15 +14,16 @@ const browserBook = (props) => {
 
     if (props.alreadyAdded === "true")
         button = (
-            <Button basic color="green" fluid onClick={props.detailClicked}>
-                Already Added
+            <Button animated="vertical" basic color="green" fluid onClick={props.detailClicked}>
+                <Button.Content hidden>Details</Button.Content>
+                <Button.Content visible>Already Added</Button.Content>
             </Button>
         );
 
     return (
-        <Grid.Column stretched mobile={16} tablet={8} computer={4}>
-            <Card>
-                <Icon name="book" size="massive" fitted style={{ marginTop: "10px", marginBottom: "10px", color: "black" }} />
+        <Grid.Column mobile={16} tablet={8} computer={4}>
+            <Card fluid>
+                <Icon name="book" size="massive" fitted style={{ marginTop: "10px", marginBottom: "10px"}} />
                 <Card.Content>
                     <Card.Header>
                         {props.name}

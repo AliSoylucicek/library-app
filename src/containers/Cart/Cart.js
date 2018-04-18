@@ -1,36 +1,26 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Segment, Grid, Header, Button, Container } from 'semantic-ui-react';
+import { Segment, Grid, Header, Button } from 'semantic-ui-react';
 
 import * as actions from '../../store/actions/orderActions';
 import ErrorHeader from '../../components/UI/ErrorHeader/ErrorHeader';
 
 class Cart extends Component {
 
-    state = {
-        canPurchase: false
-    }
-
     componentWillMount() {
         this.props.onFetchCart();
     }
 
-    componentDidMount() {
-        if (this.props.cartItems.length > 1) {
-            this.setState({ canPurchase: true });
-        }
-    }
-
     render() {
         let component = (
-            <ErrorHeader 
-            icon="shopping basket" 
-            header="Oops!" 
-            subHeader="Your shopping cart is empty, come back when you add some stuff!" 
-            link="Go To Shop!" />
+            <ErrorHeader
+                icon="shopping basket"
+                header="Oops!"
+                subHeader="Your shopping cart is empty, come back when you add some stuff!"
+                link="Go To Shop!" />
         );
         let button = (
-            <Button primary fluid onClick={this.props.onPurchaseStart} disabled={this.state.canPurchase}>
+            <Button primary fluid onClick={this.props.onPurchaseStart}>
                 Buy Now!
             </Button>
         );
@@ -39,7 +29,7 @@ class Cart extends Component {
 
             if (this.props.totalPrice > this.props.wallet) {
                 button = (
-                    <Button color="orange" fluid onClick={()=>this.props.onAddFunds(50)}>
+                    <Button color="orange" fluid onClick={() => this.props.onAddFunds(50)}>
                         Add More Funds
                     </Button>
                 )
@@ -77,7 +67,7 @@ class Cart extends Component {
             );
         }
         return (
-            <div style={{minHeight: "100vh"}}>{component}</div>
+            <div style={{ minHeight: "100vh" }}>{component}</div>
         );
     }
 }
