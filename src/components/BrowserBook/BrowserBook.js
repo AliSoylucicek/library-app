@@ -12,19 +12,26 @@ const browserBook = (props) => {
 
     );
 
+    let discountLabel = null;
+
+    if(props.discount){
+        discountLabel = <Label color='green' corner icon="arrow down"></Label>
+    }
+
     if (props.alreadyAdded === "true")
         button = (
             <Button animated="vertical" basic color="green" fluid onClick={props.detailClicked}>
                 <Button.Content hidden>Details</Button.Content>
-                <Button.Content visible>Already Added</Button.Content>
+                <Button.Content visible>Added to Cart</Button.Content>
             </Button>
         );
 
     return (
         <Grid.Column mobile={16} tablet={8} computer={4}>
             <Card fluid>
-                <Icon name="book" size="massive" fitted style={{ marginTop: "10px", marginBottom: "10px"}} />
+                <Icon name="book" size="massive" fitted style={{ marginTop: "10px", marginBottom: "10px" }} />
                 <Card.Content>
+                    {discountLabel}
                     <Card.Header>
                         {props.name}
                     </Card.Header>
@@ -41,6 +48,7 @@ const browserBook = (props) => {
                     </Card.Description>
                     <Rating disabled icon='star' rating={props.rating} maxRating={5} style={{ marginTop: ".5em" }} />
                     <Card.Description textAlign="right">
+                        {props.oldPrice ? <s style={{marginRight: "5px"}}>{props.oldPrice}</s> : null}
                         <Label size="large">
                             {props.price}
                         </Label>

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux';
 import { Sidebar, Container, Menu, Icon, Label } from 'semantic-ui-react'
 
 import NavigationItem from '../NavigationItem/NavigationItem';
@@ -41,15 +42,18 @@ class SideToolbar extends Component {
           <NavigationItem onClick={this.handlePusherClick} link="/store" name="Store" exact></NavigationItem>
           <NavigationItem onClick={this.handlePusherClick} link="/myBooks" name="My Books" exact></NavigationItem>
         </Sidebar>
-        
+
         <Sidebar.Pusher dimmed={this.state.visible} onClick={this.handlePusherClick}>
           <Menu inverted attached="bottom" size="massive">
             <Label onClick={this.toggleVisibility} className="sideToggle">
               <Icon name='sidebar' size="big" inverted fitted />
             </Label>
-            <Icon name="book" size="big" inverted style={{ position: "absolute", left: "50%", marginTop: "5px" }} />
+            <Icon name="book" size="big" inverted style={{ position: "absolute", left: "48%", marginTop: "5px" }} />
             <Menu.Menu position="right">
-              <NavigationItem link="/cart" icon="shopping bag" exact></NavigationItem>
+              <NavigationItem link="/cart" exact>
+                <Icon name="shopping bag" inverted />
+                {this.props.itemCount > 0 ? <Label circular size="tiny" color="red" floating>{this.props.itemCount}</Label> : null}
+              </NavigationItem>
             </Menu.Menu>
           </Menu>
           {this.props.children}
@@ -59,4 +63,10 @@ class SideToolbar extends Component {
   }
 }
 
-export default SideToolbar;
+const mapStateToProps = state => {
+  return {
+    itemCount: state.order.itemCount
+  };
+};
+
+export default connect(mapStateToProps)(SideToolbar);

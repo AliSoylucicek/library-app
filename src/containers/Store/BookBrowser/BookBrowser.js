@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Grid, Container, Select, Segment, Button, Form, Dimmer, Loader, Icon } from 'semantic-ui-react';
+import { Grid, Container, Select, Segment, Button, Form, Dimmer, Loader, Pagination, FormField, Input } from 'semantic-ui-react';
 
 import './BookBrowser.css';
 
@@ -8,18 +8,25 @@ import * as actions from '../../../store/actions/index';
 import { categoryOptions, sortOptions } from '../../../shared/filterOptions';
 import { updateObject } from '../../../shared/utility';
 import BrowserBook from '../../../components/BrowserBook/BrowserBook';
+import ErrorHeader from '../../../components/UI/ErrorHeader/ErrorHeader';
 
 class BookBrowser extends Component {
 
     state = {
         filterOptions: {
             category: "",
-            sorting: ""
-        }
+            sorting: "",
+            search: ""
+        },
+        page: 1
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.props.onFetchStore();
+    }
+
+    componentWillUpdate(nextProps, nextState) {
+        window.scroll(0, 0)
     }
 
     goToItemDetailHandler = (id) => {
@@ -27,22 +34,25 @@ class BookBrowser extends Component {
     }
 
     handleFilter = () => {
-        console.log(this.state.filterOptions);
-
         this.props.onFilterBooks(this.state.filterOptions)
     }
 
     sortSelectionHandler = (e, { value }) => {
-        const updatedOptions = updateObject(this.state.filterOptions, { sorting: value === 1 ? "ascending" : "descending" });
+        const updatedOptions = updateObject(this.state.filterOptions, { sorting: value });
         this.setState({ filterOptions: updatedOptions }, () => {
-            console.log(this.state);
             this.props.onFilterBooks(this.state.filterOptions)
         })
     }
 
     handleReset = () => {
-        this.setState({ filterOptions: { category: "" } });
-        this.props.onFetchStore();
+        this.setState({ filterOptions: { category: "", search: "" } }, () => {
+            this.props.onFilterBooks(this.state.filterOptions)
+        })
+    }
+
+    handleInputChange = (e, { value }) => {
+        const updatedOptions = updateObject(this.state.filterOptions, { search: value });
+        this.setState({ filterOptions: updatedOptions });
     }
 
     handleSelection = (e, { value }) => {
@@ -50,10 +60,60 @@ class BookBrowser extends Component {
         this.setState({ filterOptions: updatedOptions });
     }
 
+    handlePageChange = (e, { activePage }) => {
+        //console.log("active page : " + activePage);
+        //console.log("total pages : " + this.props.totalPages);
+        if (activePage !== this.state.page) {
+            this.setState({ page: activePage });
+            const updatedOptions = updateObject(this.state.filterOptions, { page: activePage });
+            this.setState({ filterOptions: updatedOptions }, () => {
+                this.props.onFilterBooks(this.state.filterOptions)
+            })
+        }
+
+    }
+
 
     render() {
+
+        let contents = null;
+        if (this.props.storeItems.length < 1) {
+            contents = <ErrorHeader icon="search" header="Oops!" subHeader="No books found with the filter options" />;
+        }
+        else {
+            contents = (
+                <Grid stackable>
+                    {this.props.storeItems.map(book => (
+                        <BrowserBook
+                            key={book.id}
+                            name={book.name}
+                            author={book.author}
+                            category={book.category}
+                            price={book.price}
+                            rating={book.rating}
+                            alreadyAdded={book.alreadyAdded}
+                            oldPrice={book.oldPrice}
+                            detailClicked={() => this.goToItemDetailHandler(book.id)} />
+                    ))}
+                </Grid>);
+        }
+
+        let pagination = this.props.totalPages > 1 ? <Grid centered>
+            <Grid.Column width={8} textAlign="center">
+                <Pagination activePage={this.state.page}
+                    totalPages={this.props.totalPages}
+                    onPageChange={this.handlePageChange}
+                    firstItem={this.state.page > 5 ? undefined : null}
+                    lastItem={this.state.page < this.props.totalPages - 5 ? undefined : null}
+                    prevItem={this.state.page > 1 ? undefined : null}
+                    nextItem={this.state.page < this.props.totalPages ? undefined : null}
+                />
+            </Grid.Column>
+        </Grid>
+        : null
+
         return (
-            <Grid as={Container}>
+            <Grid as={Container} stackable>
                 <Grid.Column mobile={16} tablet={4} computer={3}>
                     <Segment raised>
                         <Form>
@@ -66,6 +126,11 @@ class BookBrowser extends Component {
                                 selectOnBlur={false}
                                 fluid
                                 value={this.state.filterOptions.category} />
+                            <FormField control={Input}
+                                icon="search"
+                                placeholder="Search..."
+                                value={this.state.filterOptions.search}
+                                onChange={this.handleInputChange} />
                             <Form.Field control={Button} fluid primary onClick={this.handleFilter} loading={this.props.loading} disabled={this.props.loading}>Filter</Form.Field>
                             <Form.Field control={Button} fluid onClick={this.handleReset} disabled={this.props.loading}>Reset</Form.Field>
                         </Form>
@@ -73,23 +138,12 @@ class BookBrowser extends Component {
                 </Grid.Column>
 
                 <Grid.Column mobile={16} tablet={12} computer={13}>
-                    <Segment attached="top">
-                        <Select options={sortOptions} placeholder="Sort Options" selectOnBlur={false} onChange={this.sortSelectionHandler}>
+                    <Segment>
+                        <Select options={sortOptions} defaultValue={"added"} selectOnBlur={false} onChange={this.sortSelectionHandler}>
                         </Select>
                     </Segment>
-                    <Grid as={Segment} attached="bottom" stackable>
-                        {this.props.storeItems.map(book => (
-                            <BrowserBook
-                                key={book.id}
-                                name={book.name}
-                                author={book.author}
-                                category={book.category}
-                                price={book.price}
-                                rating={book.rating}
-                                alreadyAdded={book.alreadyAdded}
-                                detailClicked={() => this.goToItemDetailHandler(book.id)} />
-                        ))}
-                    </Grid>
+                    {contents}
+                    {pagination}
                     <Dimmer active={this.props.loading} inverted>
                         <Loader />
                     </Dimmer>
@@ -102,6 +156,7 @@ class BookBrowser extends Component {
 const mapStateToProps = state => {
     return {
         storeItems: state.store.fetchedItems,
+        totalPages: state.store.totalPages,
         loading: state.store.loading
     };
 };
@@ -109,7 +164,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onFetchStore: () => dispatch(actions.fetchStoreItems()),
-        onFetchBook: (bookId) => dispatch(actions.fetchBook(bookId)),
         onFilterBooks: (filterOptions) => dispatch(actions.filterStoreItems(filterOptions))
     };
 };

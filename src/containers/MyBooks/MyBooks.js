@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Item, Label, Icon, Container, Segment, Grid } from 'semantic-ui-react';
+import { Item, Label, Icon, Segment } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 
 import './MyBooks.css';
@@ -12,30 +12,35 @@ class MyBooks extends Component {
         this.props.onFetchBooks();
     }
 
+    clickHandler = () => {
+        this.props.history.push('store/')
+    }
+
     render() {
         let component = (
             <ErrorHeader
                 icon="remove bookmark"
-                header="Oops!"
                 subHeader="Your books can be seen here"
-                link="Go To Shop!" />
+                link="Go To Shop!"
+                onClick={this.clickHandler} />
         );
 
         if (this.props.myBooks.length > 0) {
 
             let items = this.props.myBooks.map(book => (
                 <Item key={book.id}>
-                    <Icon name="book" size="big" fitted style={{ marginLeft: "20px" }} />
+                    <Item.Image>
+                        <Icon name="book" size="massive" fitted />
+                    </Item.Image>
+                    
                     <Item.Content>
                         <Item.Header >{book.name}</Item.Header>
                         <Label style={{ marginLeft: "1em" }}>
                             {book.category}
                         </Label>
-
                         <Item.Description>
                             {book.description}
                         </Item.Description>
-
                     </Item.Content>
                 </Item>
             ));
@@ -50,9 +55,7 @@ class MyBooks extends Component {
         }
 
         return (
-            <Container fluid>
-                {component}
-            </Container>
+            <div>{component}</div>
         );
     }
 }

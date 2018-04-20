@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Segment, Grid, Header, Button } from 'semantic-ui-react';
+import { Segment, Grid, Header, Button, Item, Label, Icon } from 'semantic-ui-react';
 
 import * as actions from '../../store/actions/orderActions';
 import ErrorHeader from '../../components/UI/ErrorHeader/ErrorHeader';
@@ -11,13 +11,18 @@ class Cart extends Component {
         this.props.onFetchCart();
     }
 
+    clickHandler = () => {
+        this.props.history.push('store/')
+    }
+
     render() {
         let component = (
             <ErrorHeader
                 icon="shopping basket"
                 header="Oops!"
                 subHeader="Your shopping cart is empty, come back when you add some stuff!"
-                link="Go To Shop!" />
+                link="Go To Shop!"
+                onClick={this.clickHandler} />
         );
         let button = (
             <Button primary fluid onClick={this.props.onPurchaseStart}>
@@ -35,16 +40,29 @@ class Cart extends Component {
                 )
             }
 
-            let items = this.props.cartItems.map(item => (
-                <Grid.Row key={item.id}>
-                    <Segment>
-                        <p>{item.name}</p>
-                        <p>{item.author}</p>
-                        <p>{item.rating}</p>
-                        <p>{item.price}</p>
-                        <p>{item.description}</p>
-                    </Segment>
-                </Grid.Row>
+            let items = this.props.cartItems.map(book => (
+                <Segment key={book.id}>
+                    <Item.Group>
+                        <Item>
+                            <Item.Image>
+                                <Icon name="book" size="massive" fitted />
+                            </Item.Image>
+
+                            <Item.Content >
+                                <Item.Header >{book.name}</Item.Header>
+                                <Label style={{ marginLeft: "1em" }}>
+                                    {book.category}
+                                </Label>
+                                <Item.Description>
+                                    {book.description}
+                                </Item.Description>
+                                <Item.Extra >
+                                    <Label content={book.price} size="large" />
+                                </Item.Extra>
+                            </Item.Content>
+                        </Item>
+                    </Item.Group>
+                </Segment>
             ));
 
             component = (
@@ -61,13 +79,15 @@ class Cart extends Component {
                         </Segment>
                     </Grid.Column>
                     <Grid.Column width={12}>
-                        {items}
+                        <Segment.Group >
+                            {items}
+                        </Segment.Group>
                     </Grid.Column>
                 </Grid>
             );
         }
         return (
-            <div style={{ minHeight: "100vh" }}>{component}</div>
+            <div>{component}</div>
         );
     }
 }

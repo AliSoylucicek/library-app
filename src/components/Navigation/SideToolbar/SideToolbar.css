@@ -12,3 +12,7 @@
     min-width: 100%;
 }
 
+.pushable>.pusher{
+    min-height: 100vh;
+}
+

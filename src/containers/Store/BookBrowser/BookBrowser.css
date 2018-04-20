@@ -1,3 +1,7 @@
 .ui.grid.container{
     width: 100% !important;
 }
+
+.ui.bottom.attached.segment.ui.stackable.grid{
+    margin-left: -1px !important
+}
