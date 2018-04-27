@@ -4,14 +4,14 @@ import { categoryOptions } from '../../shared/filterOptions';
 
 const initialState = {
     storeItems: [
-        { id: 0, name: "A Hunter's Story", category: 'Adventure', rating: 4, price: 5.49, description: "A book description.", alreadyAdded: "true" },
-        { id: 1, name: "To Be a Murderer", category: 'Horror', rating: 3, price: 6.49, description: "A book description.", alreadyAdded: "false", oldPrice: 8.49 },
-        { id: 2, name: "Superman's Life", category: 'Action', rating: 5, price: 9.99, description: "A book description.", alreadyAdded: "false" },
-        { id: 3, name: "The White Tower", category: 'Fantasy', rating: 5, price: 7.49, description: "A book description.", alreadyAdded: "false" },
-        { id: 4, name: "The Woodcarver and the Day", category: 'Fantasy', rating: 3, price: 4.49, description: "A book description.", alreadyAdded: "false" },
-        { id: 5, name: "The Consuming Madman", category: 'Horror', rating: 4, price: 7.99, description: "A book description.", alreadyAdded: "false" },
-        { id: 6, name: "Mountain's Thief", category: 'Adventure', rating: 5, price: 12.49, description: "A book description.", alreadyAdded: "false" },
-        
+        { id: 0, name: "A Hunter's Story", category: 'Adventure', rating: 4, price: 5.49, description: "A book description.", purchaseState: "cart" },
+        { id: 1, name: "To Be a Murderer", category: 'Horror', rating: 3, price: 6.49, description: "A book description.", purchaseState: "", oldPrice: 8.49 },
+        { id: 2, name: "Superman's Life", category: 'Action', rating: 5, price: 9.99, description: "A book description.", purchaseState: "" },
+        { id: 3, name: "The White Tower", category: 'Fantasy', rating: 5, price: 7.49, description: "A book description.", purchaseState: "" },
+        { id: 4, name: "The Woodcarver and the Day", category: 'Fantasy', rating: 3, price: 4.49, description: "A book description.", purchaseState: "" },
+        { id: 5, name: "The Consuming Madman", category: 'Horror', rating: 4, price: 7.99, description: "A book description.", purchaseState: "" },
+        { id: 6, name: "Mountain's Thief", category: 'Adventure', rating: 5, price: 12.49, description: "A book description.", purchaseState: "" },
+
     ],
     fetchedItems: [],
     currentBook: {},
@@ -20,7 +20,7 @@ const initialState = {
 };
 
 const fetchStoreItems = (state, action) => {
-    const items = state.storeItems.length / 4 > 1 ? state.storeItems.slice(0,5) : state.storeItems;
+    const items = state.storeItems.length / 4 > 1 ? state.storeItems.slice(0, 5) : state.storeItems;
     return updateObject(state, {
         fetchedItems: items,
         totalPages: Math.round(state.storeItems.length / 4)
@@ -29,40 +29,40 @@ const fetchStoreItems = (state, action) => {
 
 export const filterStoreItems = (state, action) => {
     const storeItems = state.storeItems.slice();
+    let pages = 0
     let items = storeItems;
+    console.log(action.filterOptions);
     if (action.filterOptions.category !== "") {
         const category = categoryOptions[action.filterOptions.category - 1].text;
-        items = storeItems.filter(
+        items = items.filter(
             item => item.category === category
         );
     }
 
-    if(action.filterOptions.sorting === "ascending")
-    {
-        items.sort((a,b)=>a.price - b.price)
-    }
-    
-    if(action.filterOptions.sorting === "descending")
-    {
-        items.sort((a,b)=>b.price - a.price)
+    if (action.filterOptions.sorting === "ascending") {
+        items.sort((a, b) => a.price - b.price)
     }
 
-    if(action.filterOptions.page){
-        const page = action.filterOptions.page * 5;
-        items = storeItems.slice(page-5,page);
+    if (action.filterOptions.sorting === "descending") {
+        items.sort((a, b) => b.price - a.price)
     }
 
-    console.log(action.filterOptions);
-
-    if(action.filterOptions.search !== ""){
+    if (action.filterOptions.search !== "") {
         const reg = new RegExp(action.filterOptions.search, "i");
         items = items.filter(item => reg.test(item.name));
+    }
+
+    pages = Math.round(items.length / 4)
+
+    if (action.filterOptions.page && pages > 1) {
+        const page = action.filterOptions.page * 5;
+        items = storeItems.slice(page - 5, page);
     }
 
     //console.log(items);
     return updateObject(state, {
         fetchedItems: items,
-        totalPages: Math.round(items.length / 4)
+        totalPages: pages
     })
 }
 
@@ -74,16 +74,17 @@ const filterStoreComplete = (state, action) => {
     return updateObject(state, { loading: false });
 }
 
-const updateBook = (state, action) => {
+const updatePurchaseState = (state, action) => {
     const updatedBooks = state.storeItems.map(item => {
-        if (item.id !== action.bookId) {
-            return item;
+        for (let book of action.books) {
+            if (item.id !== book.id) {
+                return item;
+            }
+            return {
+                ...item,
+                purchaseState: action.bookState
+            };
         }
-        
-        return {
-            ...item,
-            alreadyAdded: "true"
-        };
     });
     const updatedState = {
         storeItems: updatedBooks
@@ -103,7 +104,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.FILTER_STORE_START: return filterStoreStart(state, action);
         case actionTypes.FILTER_STORE_COMPLETE: return filterStoreComplete(state, action);
         case actionTypes.FETCH_BOOK: return fetchBook(state, action);
-        case actionTypes.UPDATE_BOOK: return updateBook(state, action);
+        case actionTypes.UPDATE_PURCHASE_STATE: return updatePurchaseState(state, action);
         default: return state;
     }
 };

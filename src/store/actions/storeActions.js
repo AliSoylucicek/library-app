@@ -38,10 +38,11 @@ export const fetchBook = (id) => {
     };
 };
 
-export const updateBook = (id) => {
+export const updatePurchaseState = (books, state) => {
     return {
-        type: actionTypes.UPDATE_BOOK,
-        bookId: id
+        type: actionTypes.UPDATE_PURCHASE_STATE,
+        books: books,
+        bookState: state
     };
 };
 

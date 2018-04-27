@@ -5,26 +5,38 @@ import './BrowserBook.css';
 
 const browserBook = (props) => {
 
-    let button = (
-        <Button onClick={props.detailClicked} basic primary fluid>
-            Details
-        </Button>
-
-    );
-
     let discountLabel = null;
 
-    if(props.discount){
+    if (props.oldPrice) {
         discountLabel = <Label color='green' corner icon="arrow down"></Label>
     }
 
-    if (props.alreadyAdded === "true")
-        button = (
-            <Button animated="vertical" basic color="green" fluid onClick={props.detailClicked}>
-                <Button.Content hidden>Details</Button.Content>
-                <Button.Content visible>Added to Cart</Button.Content>
-            </Button>
-        );
+    let button = null;
+    switch (props.purchaseState) {
+        case "cart":
+            button = (
+                <Button animated="vertical" basic color="green" fluid onClick={props.detailClicked}>
+                    <Button.Content hidden>Details</Button.Content>
+                    <Button.Content visible>Added to Cart</Button.Content>
+                </Button>
+            );
+            break
+        case "purchased":
+            button = (
+                <Button animated="vertical" basic color="green" fluid onClick={props.detailClicked}>
+                    <Button.Content hidden>Details</Button.Content>
+                    <Button.Content visible>Purchased</Button.Content>
+                </Button>
+            );
+            break
+        default:
+            button = (
+                <Button onClick={props.detailClicked} basic primary fluid>
+                    Details
+                </Button>
+            );
+            break
+    }
 
     return (
         <Grid.Column mobile={16} tablet={8} computer={4}>
@@ -48,7 +60,7 @@ const browserBook = (props) => {
                     </Card.Description>
                     <Rating disabled icon='star' rating={props.rating} maxRating={5} style={{ marginTop: ".5em" }} />
                     <Card.Description textAlign="right">
-                        {props.oldPrice ? <s style={{marginRight: "5px"}}>{props.oldPrice}</s> : null}
+                        {props.oldPrice ? <s style={{ marginRight: "5px" }}>{props.oldPrice}</s> : null}
                         <Label size="large">
                             {props.price}
                         </Label>

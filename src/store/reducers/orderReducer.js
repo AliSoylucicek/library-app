@@ -23,6 +23,17 @@ const addToCart = (state, action) => {
     })
 }
 
+const removeItem = (state, action) => {
+    const newPrice = state.totalPrice - action.bookData.price;
+    const newCart = state.cart.filter(item => item.id !== action.bookId);
+    return updateObject(state, {
+        cart: newCart,
+        itemCount: state.itemCount - 1,
+        totalPrice: newPrice
+    })
+
+}
+
 const fetchCartItems = (state, action) => {
     return updateObject(state, {
         cart: state.cart
@@ -31,21 +42,21 @@ const fetchCartItems = (state, action) => {
 
 const purchaseItems = (state, action) => {
     console.log("Total price to be purchased: " + state.totalPrice);
-
     if (state.wallet >= state.totalPrice) {
         state.wallet -= state.totalPrice;
         console.log("Purchase is successful");
-        return purchaseSuccess(state,action);
+        return purchaseSuccess(state, action);
     }
     else {
         console.log("Insufficient funds!");
-        return purchaseFail(state,action);
+        return purchaseFail(state, action);
     }
 
 }
 
 const purchaseSuccess = (state, action) => {
     const newMyBooks = state.myBooks.concat(state.cart);
+    
     return updateObject(state, {
         cart: [],
         myBooks: newMyBooks,
@@ -73,6 +84,7 @@ const fetchMyBooks = (state, action) => {
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.ADD_TO_CART: return addToCart(state, action);
+        case actionTypes.REMOVE_ITEM: return removeItem(state, action);
         case actionTypes.FETCH_CART_ITEMS: return fetchCartItems(state, action);
         case actionTypes.ADD_MORE_FUNDS: return addMoreFunds(state, action);
         case actionTypes.PURCHASE_ITEMS: return purchaseItems(state, action);

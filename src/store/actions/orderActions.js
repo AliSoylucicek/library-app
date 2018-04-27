@@ -8,6 +8,14 @@ export const addToCart = (id, bookData) => {
     };
 };
 
+export const removeItem = (id, bookData) => {
+    return {
+        type: actionTypes.REMOVE_ITEM,
+        bookId: id,
+        bookData: bookData
+    };
+};
+
 export const fetchCartItems = () => {
     return {
         type: actionTypes.FETCH_CART_ITEMS
@@ -21,10 +29,16 @@ export const addMoreFunds = (funds) => {
     };
 };
 
-export const purchaseItems = () => {
-    return {
-        type: actionTypes.PURCHASE_ITEMS
-    };
+export const purchaseItems = (items) => {
+    return (dispatch) => {
+        dispatch({
+            type: actionTypes.UPDATE_PURCHASE_STATE,
+            books: items,
+            bookState: "purchased"
+        })
+        dispatch({ type: actionTypes.PURCHASE_ITEMS })
+        
+    }
 };
 
 export const purchaseSuccess = () => {

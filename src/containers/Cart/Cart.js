@@ -15,6 +15,10 @@ class Cart extends Component {
         this.props.history.push('store/')
     }
 
+    removeHandler = (book) => {
+        this.props.onRemoveItem(book.id, book);
+    }
+
     render() {
         let component = (
             <ErrorHeader
@@ -25,7 +29,7 @@ class Cart extends Component {
                 onClick={this.clickHandler} />
         );
         let button = (
-            <Button primary fluid onClick={this.props.onPurchaseStart}>
+            <Button primary fluid onClick={()=>this.props.onPurchaseStart(this.props.cartItems)}>
                 Buy Now!
             </Button>
         );
@@ -58,7 +62,9 @@ class Cart extends Component {
                                 </Item.Description>
                                 <Item.Extra >
                                     <Label content={book.price} size="large" />
+                                    <Button icon="close" floated="right" basic color="red" content="Remove" onClick={() => this.removeHandler(book)} />
                                 </Item.Extra>
+
                             </Item.Content>
                         </Item>
                     </Item.Group>
@@ -73,7 +79,7 @@ class Cart extends Component {
                                 Total Price: {this.props.totalPrice}
                             </Header>
                             <Header as='h3' textAlign='center'>
-                                Wallet: {this.props.wallet}
+                                Wallet: {this.props.wallet.toFixed()}
                             </Header>
                             {button}
                         </Segment>
@@ -103,8 +109,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onFetchCart: () => dispatch(actions.fetchCartItems()),
-        onPurchaseStart: () => dispatch(actions.purchaseItems()),
-        onAddFunds: (funds) => dispatch(actions.addMoreFunds(funds))
+        onPurchaseStart: (items) => dispatch(actions.purchaseItems(items)),
+        onAddFunds: (funds) => dispatch(actions.addMoreFunds(funds)),
+        onRemoveItem: (id, bookData) => dispatch(actions.removeItem(id, bookData)),
     };
 };
 

@@ -20,7 +20,9 @@ class BookDetail extends Component {
 
     addToCartHandler() {
         this.props.onAddToCart(this.props.book.id, this.props.book);
-        this.props.onUpdateBook(this.props.book.id)
+        const books = [];
+        books.push(this.props.book)
+        this.props.onUpdateBook(books, "cart")
         this.props.onFetchBook(this.props.book.id);
         this.setState({ open: true })
     }
@@ -59,8 +61,15 @@ class BookDetail extends Component {
             </Button>
         );
 
-        if (this.props.book.alreadyAdded === "true")
+        const bookState = this.props.book.purchaseState;
+        if(bookState !== "")
+        {
+            if (bookState === "cart")
             itemButton = <Button basic color="green" floated="right">Added to Cart</Button>
+            else if(bookState === "purchased")
+            itemButton = <Button basic color="green" floated="right">Purchased</Button>
+        }
+        
 
         if (this.props.book.hasOwnProperty('name')) {
             bookDetail = (
@@ -125,7 +134,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onFetchBook: (id) => dispatch(actions.fetchBook(id)),
-        onUpdateBook: (id) => dispatch(actions.updateBook(id)),
+        onUpdateBook: (books, state) => dispatch(actions.updatePurchaseState(books, state)),
         onAddToCart: (bookId, bookData) => dispatch(actions.addToCart(bookId, bookData)),
     };
 };

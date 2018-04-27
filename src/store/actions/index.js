@@ -1,5 +1,6 @@
 export {
     addToCart,
+    removeItem,
     fetchOrders,
     addMoreFunds,
     purchaseItems,
@@ -12,5 +13,5 @@ export {
     fetchStoreItems,
     filterStoreItems,
     fetchBook,
-    updateBook
+    updatePurchaseState
 } from './storeActions';

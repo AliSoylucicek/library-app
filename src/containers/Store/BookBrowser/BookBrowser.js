@@ -30,7 +30,7 @@ class BookBrowser extends Component {
     }
 
     goToItemDetailHandler = (id) => {
-        this.props.history.push('store/' + id);
+        this.props.history.push('/store/' + id);
     }
 
     handleFilter = () => {
@@ -45,7 +45,7 @@ class BookBrowser extends Component {
     }
 
     handleReset = () => {
-        this.setState({ filterOptions: { category: "", search: "" } }, () => {
+        this.setState({ filterOptions: { category: "", search: "" }, page: 1 }, () => {
             this.props.onFilterBooks(this.state.filterOptions)
         })
     }
@@ -91,7 +91,7 @@ class BookBrowser extends Component {
                             category={book.category}
                             price={book.price}
                             rating={book.rating}
-                            alreadyAdded={book.alreadyAdded}
+                            purchaseState={book.purchaseState}
                             oldPrice={book.oldPrice}
                             detailClicked={() => this.goToItemDetailHandler(book.id)} />
                     ))}
@@ -105,7 +105,7 @@ class BookBrowser extends Component {
                     onPageChange={this.handlePageChange}
                     firstItem={this.state.page > 5 ? undefined : null}
                     lastItem={this.state.page < this.props.totalPages - 5 ? undefined : null}
-                    prevItem={this.state.page > 1 ? undefined : null}
+                    prevItem={this.state.page > 11 ? undefined : null}
                     nextItem={this.state.page < this.props.totalPages ? undefined : null}
                 />
             </Grid.Column>
