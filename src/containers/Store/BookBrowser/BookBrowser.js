@@ -105,7 +105,7 @@ class BookBrowser extends Component {
                     onPageChange={this.handlePageChange}
                     firstItem={this.state.page > 5 ? undefined : null}
                     lastItem={this.state.page < this.props.totalPages - 5 ? undefined : null}
-                    prevItem={this.state.page > 11 ? undefined : null}
+                    prevItem={this.state.page > 1 ? undefined : null}
                     nextItem={this.state.page < this.props.totalPages ? undefined : null}
                 />
             </Grid.Column>

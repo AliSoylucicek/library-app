@@ -9,11 +9,19 @@ export const addToCart = (id, bookData) => {
 };
 
 export const removeItem = (id, bookData) => {
-    return {
-        type: actionTypes.REMOVE_ITEM,
-        bookId: id,
-        bookData: bookData
-    };
+    const items = [bookData];
+    return (dispatch) => {
+        dispatch({
+            type: actionTypes.UPDATE_PURCHASE_STATE,
+            books: items,
+            bookState: ""
+        })
+        dispatch({
+            type: actionTypes.REMOVE_ITEM,
+            bookId: id,
+            bookData: bookData
+        })
+    }
 };
 
 export const fetchCartItems = () => {
