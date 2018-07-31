@@ -61,8 +61,6 @@ class BookBrowser extends Component {
     }
 
     handlePageChange = (e, { activePage }) => {
-        //console.log("active page : " + activePage);
-        //console.log("total pages : " + this.props.totalPages);
         if (activePage !== this.state.page) {
             this.setState({ page: activePage });
             const updatedOptions = updateObject(this.state.filterOptions, { page: activePage });
