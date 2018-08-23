@@ -5,6 +5,7 @@ import Layout from './hoc/Layout/Layout';
 import Store from './containers/Store/Store';
 import Cart from './containers/Cart/Cart';
 import MyBooks from './containers/MyBooks/MyBooks';
+import Dashboard from './containers/Dashboard/Dashboard';
 
 
 class App extends Component {
@@ -15,7 +16,8 @@ class App extends Component {
         <Route path="/store" component={Store} />
         <Route path="/myBooks" component={MyBooks} />
         <Route path="/cart" component={Cart} />
-        <Redirect to="/" exact/>
+        <Route path="/home" component={Dashboard} />
+        <Redirect to="/home"/>
       </Switch>
     );
 

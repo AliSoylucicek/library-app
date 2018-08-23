@@ -60,9 +60,9 @@ const browserBook = (props) => {
                     </Card.Description>
                     <Rating disabled icon='star' rating={props.rating} maxRating={5} style={{ marginTop: ".5em" }} />
                     <Card.Description textAlign="right">
-                        {props.oldPrice ? <s style={{ marginRight: "5px" }}>{props.oldPrice}</s> : null}
+                        {props.oldPrice ? <s style={{ marginRight: "5px" }}>{props.oldPrice} $</s> : null}
                         <Label size="large">
-                            {props.price}
+                            {props.price} $
                         </Label>
                     </Card.Description>
                 </Card.Content>

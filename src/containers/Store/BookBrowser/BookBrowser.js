@@ -1,6 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Grid, Container, Select, Segment, Button, Form, Dimmer, Loader, Pagination, FormField, Input } from 'semantic-ui-react';
+import {
+    Grid,
+    Container,
+    Select,
+    Segment,
+    Button,
+    Form,
+    Dimmer,
+    Loader,
+    Pagination,
+    FormField,
+    Input
+} from 'semantic-ui-react';
 
 import './BookBrowser.css';
 
