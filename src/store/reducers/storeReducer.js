@@ -4,13 +4,13 @@ import { categoryOptions } from '../../shared/filterOptions';
 
 const initialState = {
     storeItems: [
-        { id: 0, name: "A Hunter's Story", category: 'Adventure', rating: 4, price: 5.49, description: "A book description.", purchaseState: "cart" },
-        { id: 1, name: "To Be a Murderer", category: 'Horror', rating: 3, price: 6.49, description: "A book description.", purchaseState: "", oldPrice: 8.49 },
-        { id: 2, name: "Superman's Life", category: 'Action', rating: 5, price: 9.99, description: "A book description.", purchaseState: "" },
-        { id: 3, name: "The White Tower", category: 'Fantasy', rating: 5, price: 7.49, description: "A book description.", purchaseState: "" },
-        { id: 4, name: "The Woodcarver and the Day", category: 'Fantasy', rating: 3, price: 4.49, description: "A book description.", purchaseState: "" },
-        { id: 5, name: "The Consuming Madman", category: 'Horror', rating: 4, price: 7.99, description: "A book description.", purchaseState: "" },
-        { id: 6, name: "Mountain's Thief", category: 'Adventure', rating: 5, price: 12.49, description: "A book description.", purchaseState: "" },
+        { id: 0, name: "A Hunter's Story", author: "Jackson Teller", category: 'Adventure', rating: 4, price: 5.49, description: "A book description.", purchaseState: "cart" },
+        { id: 1, name: "To Be a Murderer", author: "Alice Frederic", category: 'Horror', rating: 3, price: 6.49, description: "A book description.", purchaseState: "", oldPrice: 8.49 },
+        { id: 2, name: "Superman's Life", author: "M.J. Watson", category: 'Action', rating: 5, price: 9.99, description: "A book description.", purchaseState: "" },
+        { id: 3, name: "The White Tower", author: "Howard Stark", category: 'Fantasy', rating: 5, price: 7.49, description: "A book description.", purchaseState: "" },
+        { id: 4, name: "The Woodcarver and the Day", author: "Pablo Escobar", category: 'Fantasy', rating: 3, price: 4.49, description: "A book description.", purchaseState: "" },
+        { id: 5, name: "The Consuming Madman", author: "Han Solo", category: 'Horror', rating: 4, price: 7.99, description: "A book description.", purchaseState: "" },
+        { id: 6, name: "Mountain's Thief", author: "Gandald the White", category: 'Adventure', rating: 5, price: 12.49, description: "A book description.", purchaseState: "" },
 
     ],
     fetchedItems: [],

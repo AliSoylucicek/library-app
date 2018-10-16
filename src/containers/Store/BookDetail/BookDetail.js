@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { Item, Rating, Icon, Label, Button } from 'semantic-ui-react';
+import { Item, Rating, Icon, Label, Button, Grid, Container, Segment } from 'semantic-ui-react';
 
 import './BookDetail.css';
 import ConfirmPortal from './ConfirmPortal/ConfirmPortal';
@@ -49,27 +49,28 @@ class BookDetail extends Component {
             oldPrice = this.props.book.oldPrice + "  ";
         }
 
-        let itemButton = (
-            <Button as="div" floated="right" labelPosition='right' onClick={() => this.addToCartHandler()}>
-                {this.props.book.oldPrice ? <s style={{ lineHeight: "2.5em", marginRight: "10px" }}>{oldPrice} </s> : null}
-                <Button color="blue">
-                    Add To Cart
-                </Button>
-                <Label basic color="blue" pointing="left">
-                    {this.props.book.price}
-                </Label>
+        let cartButton = (
+            <Button color="blue" fluid onClick={() => this.addToCartHandler()}>
+                <Icon name="shopping bag" />
+                Add to Cart
             </Button>
         );
 
+        let favouriteButton = (
+            <Button color="red" fluid>
+                <Icon name="heart" />
+                Add to Favourites
+            </Button>
+        )
+
         const bookState = this.props.book.purchaseState;
-        if(bookState !== "")
-        {
+        if (bookState !== "") {
             if (bookState === "cart")
-            itemButton = <Button basic color="green" floated="right">Added to Cart</Button>
-            else if(bookState === "purchased")
-            itemButton = <Button basic color="green" floated="right">Purchased</Button>
+                cartButton = <Button basic color="green" fluid disabled>Added to Cart</Button>
+            else if (bookState === "purchased")
+                cartButton = <Button basic color="green" fluid>Purchased</Button>
         }
-        
+
 
         if (this.props.book.hasOwnProperty('name')) {
             bookDetail = (
@@ -90,36 +91,57 @@ class BookDetail extends Component {
                         </Item.Description>
 
                         <Item.Extra>
-                            <Rating icon='star' rating={this.props.book.rating} maxRating={5} />
+                            <Rating icon='star' rating={this.props.book.rating} maxRating={5} disabled />
 
                         </Item.Extra>
-                        <Item.Extra>
-                            {itemButton}
+                        {/* <Item.Extra>
+                            {cartButton}
                         </Item.Extra>
+                        <Item.Extra>
+                            {favouriteButton}
+                        </Item.Extra> */}
                     </Item.Content>
                 </Item>
             );
         }
 
-        
+
 
         return (
-            <div>
-                <Item.Group>
-                    <Button basic color="blue" onClick={this.toShopHandler} >
-                        <Icon name="arrow left" />Back to Shop
-                    </Button>
-                    {bookDetail}
-                </Item.Group>
-                <ConfirmPortal
-                book={this.props.book}
-                open={this.state.open}
-                handleClose={this.handleClose}
-                shop={this.toShopHandler}
-                cart={this.toCartHandler}
-                />
-            </div>
 
+            <Container fluid>
+                <Grid stackable>
+                    <Grid.Row>
+                        <Grid.Column width={11}>
+                            <Item.Group>
+                                <Button basic color="blue" onClick={this.toShopHandler} >
+                                    <Icon name="arrow left" />Back to Shop
+                                </Button>
+                                {bookDetail}
+                            </Item.Group>
+                        </Grid.Column>
+                        <Grid.Column width={5}>
+                            <Segment style={{ height: "100%" }} textAlign="center">
+                                <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+                                    {this.props.book.oldPrice ? <h3 style={{ textDecoration: "line-through", marginBottom: "0px", marginTop: "5px" }}>{oldPrice} $</h3> : null}
+                                    <h2 style={{ marginTop: "0px" }}>{this.props.book.price} $</h2>
+                                </div>
+                                <br />
+                                {cartButton}
+                                <br />
+                                {favouriteButton}
+                            </Segment>
+                        </Grid.Column>
+                    </Grid.Row>
+                </Grid>
+                <ConfirmPortal
+                    book={this.props.book}
+                    open={this.state.open}
+                    handleClose={this.handleClose}
+                    shop={this.toShopHandler}
+                    cart={this.toCartHandler}
+                />
+            </Container>
         );
     }
 }

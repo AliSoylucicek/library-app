@@ -61,7 +61,7 @@ class Cart extends Component {
                                     {book.description}
                                 </Item.Description>
                                 <Item.Extra >
-                                    <Label content={book.price} size="large" />
+                                    <Label content={book.price + " $"} size="large" />
                                     <Button icon="close" floated="right" basic color="red" content="Remove" onClick={() => this.removeHandler(book)} />
                                 </Item.Extra>
 

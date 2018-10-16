@@ -44,8 +44,10 @@ const browserBook = (props) => {
                 <Icon name="book" size="massive" fitted style={{ marginTop: "10px", marginBottom: "10px" }} />
                 <Card.Content>
                     {discountLabel}
-                    <Card.Header>
+                    <Card.Header style={{ display:"flex",justifyContent:"space-between"}}>
                         {props.name}
+                        <Icon name="heart" color="grey"/>
+
                     </Card.Header>
                     <Card.Meta>
                         <span>
@@ -57,7 +59,9 @@ const browserBook = (props) => {
                         <Label>
                             {props.category}
                         </Label>
+
                     </Card.Description>
+
                     <Rating disabled icon='star' rating={props.rating} maxRating={5} style={{ marginTop: ".5em" }} />
                     <Card.Description textAlign="right">
                         {props.oldPrice ? <s style={{ marginRight: "5px" }}>{props.oldPrice} $</s> : null}

@@ -45,8 +45,6 @@ class MyBooks extends Component {
                 </Item>
             ));
 
-            console.log(items);
-
             component = (
                 <Item.Group as={Segment}>
                     {items}
