@@ -4,38 +4,38 @@ import { Item, Label, Button, Icon, Modal, TransitionablePortal } from 'semantic
 
 const confirmPortal = (props) => {
 
-    const item = (
-        <Item.Group>
+    const items = props.books.map(book => (
+        <Item.Group key={book.id}>
             <Item>
                 <Item.Image>
                     <Icon name="book" size="huge" fitted style={{ marginLeft: "20px" }} />
                 </Item.Image>
                 <Item.Content>
-                    <Item.Header >{props.book.name}</Item.Header>
+                    <Item.Header >{book.name}</Item.Header>
                     <Item.Description>
                         <Label>
-                            {props.book.price}
+                            {book.price}
                         </Label>
                     </Item.Description>
                 </Item.Content>
             </Item>
         </Item.Group>
-    );
+    ));
 
 
     return (
         <TransitionablePortal onClose={props.handleClose} open={props.open}>
             <Modal dimmer="inverted" open onClose={props.handleClose} closeIcon>
-                <Modal.Header>Added to Cart!</Modal.Header>
+                <Modal.Header>{props.header}</Modal.Header>
                 <Modal.Content>
-                    {item}
+                    {items}
                 </Modal.Content>
                 <Modal.Actions>
-                    <Button basic color="blue" onClick={props.shop}>
-                        Back to Shop
+                    <Button basic color="blue" onClick={props.primary}>
+                        {props.primaryButton}
                     </Button>
-                    <Button basic color="green" onClick={props.cart}>
-                        Go to Cart
+                    <Button basic color="green" onClick={props.secondary}>
+                        {props.secondaryButton}
                     </Button>
                 </Modal.Actions>
             </Modal>

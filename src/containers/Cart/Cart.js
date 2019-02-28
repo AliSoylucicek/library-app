@@ -1,13 +1,21 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Segment, Grid, Header, Button, Item, Label, Icon } from 'semantic-ui-react';
+import { Segment, Grid, Header, Button, Item, Label, Icon, Container } from 'semantic-ui-react';
 
+import ConfirmPortal from '../Store/BookDetail/ConfirmPortal/ConfirmPortal';
 import * as actions from '../../store/actions/orderActions';
 import ErrorHeader from '../../components/UI/ErrorHeader/ErrorHeader';
+import './Cart.css';
 
 class Cart extends Component {
 
+    state = {
+        open: false,
+        cartItems: []
+    }
+
     componentWillMount() {
+        console.log("CDM");
         this.props.onFetchCart();
     }
 
@@ -19,17 +27,35 @@ class Cart extends Component {
         this.props.onRemoveItem(book.id, book);
     }
 
+    purchaseHandler = () => {
+        this.state.cartItems = this.props.cartItems;
+        this.props.onPurchaseStart(this.props.cartItems)
+        //@TODO Confirm portal gets reased because there are no items left after purchase
+        this.setState({ open: true });
+    }
+
+    toShopHandler = () => {
+        this.props.history.push('/store');
+    }
+
+    toMyBooksHandler = () => {
+        this.props.history.push('/myBooks');
+    }
+
     render() {
-        let component = (
-            <ErrorHeader
-                icon="shopping basket"
-                header="Oops!"
-                subHeader="Your shopping cart is empty, come back when you add some stuff!"
-                link="Go To Shop!"
-                onClick={this.clickHandler} />
-        );
+        let component;
+        if (this.state.open === false) {
+            component = (
+                <ErrorHeader
+                    icon="shopping basket"
+                    header="Oops!"
+                    subHeader="Your shopping cart is empty, come back when you add some stuff!"
+                    link="Go To Shop!"
+                    onClick={this.clickHandler} />
+            );
+        }
         let button = (
-            <Button primary fluid onClick={()=>this.props.onPurchaseStart(this.props.cartItems)}>
+            <Button primary fluid onClick={() => this.purchaseHandler()}>
                 Buy Now!
             </Button>
         );
@@ -43,7 +69,7 @@ class Cart extends Component {
                     </Button>
                 )
             }
-
+            console.log(this.props.cartItems[0]);
             let items = this.props.cartItems.map(book => (
                 <Segment key={book.id}>
                     <Item.Group>
@@ -53,7 +79,7 @@ class Cart extends Component {
                             </Item.Image>
 
                             <Item.Content >
-                                <Item.Header >{book.name}</Item.Header>
+                                <Item.Header>{book.name}</Item.Header>
                                 <Label style={{ marginLeft: "1em" }}>
                                     {book.category}
                                 </Label>
@@ -72,7 +98,7 @@ class Cart extends Component {
             ));
 
             component = (
-                <Grid container stackable>
+                <Grid stackable>
                     <Grid.Column width={4}>
                         <Segment>
                             <Header as='h3' textAlign='center'>
@@ -93,7 +119,19 @@ class Cart extends Component {
             );
         }
         return (
-            <div>{component}</div>
+            <Container>
+                {component}
+                <ConfirmPortal
+                    header="Purchase Successful!"
+                    books={this.state.cartItems}
+                    open={this.state.open}
+                    handleClose={this.handleClose}
+                    primaryButton="Go to MyBooks"
+                    secondaryButton="Go to Shop"
+                    primary={this.toMyBooksHandler}
+                    secondary={this.toShopHandler}
+                />
+            </Container>
         );
     }
 }
