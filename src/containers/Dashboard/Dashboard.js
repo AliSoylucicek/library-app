@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Header, Grid, Segment, Card } from 'semantic-ui-react';
+import { Container, Header, Grid, Card } from 'semantic-ui-react';
 
 import { categoryOptions } from '../../shared/filterOptions';
 import './Dashboard.css';

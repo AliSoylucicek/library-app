@@ -15,7 +15,6 @@ class Cart extends Component {
     }
 
     componentWillMount() {
-        console.log("CDM");
         this.props.onFetchCart();
     }
 
@@ -28,7 +27,10 @@ class Cart extends Component {
     }
 
     purchaseHandler = () => {
-        this.state.cartItems = this.props.cartItems;
+        this.setState({
+            ...this.state,
+            cartItems: this.props.cartItems
+        });
         this.props.onPurchaseStart(this.props.cartItems)
         //@TODO Confirm portal gets reased because there are no items left after purchase
         this.setState({ open: true });

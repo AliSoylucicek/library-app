@@ -1,7 +1,6 @@
 export {
     addToCart,
     removeItem,
-    fetchOrders,
     addMoreFunds,
     purchaseItems,
     purchaseSuccess,
