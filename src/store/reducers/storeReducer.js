@@ -5,7 +5,7 @@ import { categoryOptions } from '../../shared/filterOptions';
 const initialState = {
     storeItems: [
         { id: 0, name: "A Hunter's Story", author: "Jackson Teller", category: 'Adventure', rating: 4, price: 5.49, description: "A book description.", purchaseState: "cart" },
-        { id: 1, name: "To Be a Murderer", author: "Alice Frederic", category: 'Horror', rating: 3, price: 6.49, description: "A book description.", purchaseState: "", oldPrice: 8.49 },
+        { id: 1, name: "To Be a Murderer", author: "Alice Frederic", category: 'Horror', rating: 3, price: 6.49, description: "A book description.", purchaseState: "purchased", oldPrice: 8.49 },
         { id: 2, name: "Superman's Life", author: "M.J. Watson", category: 'Action', rating: 5, price: 9.99, description: "A book description.", purchaseState: "" },
         { id: 3, name: "The White Tower", author: "Howard Stark", category: 'Fantasy', rating: 5, price: 7.49, description: "A book description.", purchaseState: "" },
         { id: 4, name: "The Woodcarver and the Day", author: "Pablo Escobar", category: 'Fantasy', rating: 3, price: 4.49, description: "A book description.", purchaseState: "" },
@@ -75,16 +75,17 @@ const filterStoreComplete = (state, action) => {
 }
 
 const updatePurchaseState = (state, action) => {
-    const updatedBooks = state.storeItems.map(item => {
+    const updatedBooks = state.storeItems.map(i => {
+        let item = i;
         for (let book of action.books) {
-            if (item.id !== book.id) {
-                return item;
+            if (i.id === book.id) {
+                item = {
+                    ...item,
+                    purchaseState: action.bookState
+                };
             }
-            return {
-                ...item,
-                purchaseState: action.bookState
-            };
         }
+        return item;
     });
     const updatedState = {
         storeItems: updatedBooks

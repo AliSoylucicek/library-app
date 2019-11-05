@@ -35,6 +35,7 @@ class Dashboard extends Component {
             <Container fluid>
                 <Header style={{paddingTop:"1rem"}}>Categories</Header>
                 {categories}
+                <Header style={{paddingTop:"1rem"}}>Top Popular</Header>
 
             </Container>
         );

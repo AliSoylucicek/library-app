@@ -3,9 +3,10 @@ import { updateObject } from '../../shared/utility';
 
 const initialState = {
     cart: [
-        { id: 0, name: "A Hunter's Story", category: 'Adventure', rating: 4, price: 5.49, description: "A book description.", alreadyAdded: "true" },
+        { id: 0, name: "A Hunter's Story", category: 'Adventure', rating: 4, price: 5.49, description: "A book description.", alreadyAdded: "true" }
     ],
     myBooks: [
+        { id: 1, name: "To Be a Murderer", author: "Alice Frederic", category: 'Horror', rating: 3, price: 6.49, description: "A book description.", purchaseState: "", oldPrice: 8.49 }
 
     ],
     itemCount: 1,

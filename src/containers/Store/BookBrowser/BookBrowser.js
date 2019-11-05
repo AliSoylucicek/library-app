@@ -37,7 +37,7 @@ class BookBrowser extends Component {
         this.props.onFetchStore();
     }
 
-    componentWillUpdate(nextProps, nextState) {
+    componentDidUpdate(nextProps, nextState) {
         window.scroll(0, 0)
     }
 

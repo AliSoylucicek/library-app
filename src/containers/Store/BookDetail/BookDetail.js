@@ -15,7 +15,7 @@ class BookDetail extends Component {
         book: []
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.props.onFetchBook(+this.props.match.params.id);
     }
 
@@ -39,7 +39,6 @@ class BookDetail extends Component {
     handleClose = () => this.setState({ open: false })
 
     render() {
-
         let bookDetail = (
             <ErrorHeader icon="warning sign" header="Oops!" subHeader="This item doesn't exist!" />
         );
@@ -48,6 +47,7 @@ class BookDetail extends Component {
         let book;
 
         if (this.props.book) {
+            console.log(this.props.book);
             let oldPrice = "";
 
             if (this.props.book.oldPrice) {
@@ -58,7 +58,7 @@ class BookDetail extends Component {
                 <Button color="blue" fluid onClick={() => this.addToCartHandler()}>
                     <Icon name="shopping bag" />
                     Add to Cart
-            </Button>
+                </Button>
             );
 
             let favouriteButton = (
@@ -67,6 +67,14 @@ class BookDetail extends Component {
                     Add to Favourites
             </Button>
             );
+
+            const bookState = this.props.book.purchaseState;
+            if (bookState !== "") {
+                if (bookState === "cart")
+                    cartButton = <Button basic color="blue" fluid disabled>Added to Cart</Button>
+                else if (bookState === "purchased")
+                    cartButton = <Button basic color="green" fluid disabled>Purchased</Button>
+            }
 
             purchasePanel = (
                 <Segment style={{ height: "100%" }} textAlign="center">
@@ -81,13 +89,7 @@ class BookDetail extends Component {
                 </Segment>
             );
 
-            const bookState = this.props.book.purchaseState;
-            if (bookState !== "") {
-                if (bookState === "cart")
-                    cartButton = <Button basic color="green" fluid disabled>Added to Cart</Button>
-                else if (bookState === "purchased")
-                    cartButton = <Button basic color="green" fluid>Purchased</Button>
-            }
+            
 
             if (this.props.book.hasOwnProperty('name')) {
                 book = (

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Item, Label, Icon, Segment } from 'semantic-ui-react';
+import { Grid, Container } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 
 import './MyBooks.css';
+import LibraryBook from '../../components/LibraryBook/LibraryBook';
 import * as actions from '../../store/actions/index';
 import ErrorHeader from '../../components/UI/ErrorHeader/ErrorHeader';
 
@@ -28,27 +29,37 @@ class MyBooks extends Component {
         if (this.props.myBooks.length > 0) {
 
             let items = this.props.myBooks.map(book => (
-                <Item key={book.id}>
-                    <Item.Image>
-                        <Icon name="book" size="massive" fitted />
-                    </Item.Image>
-                    
-                    <Item.Content>
-                        <Item.Header >{book.name}</Item.Header>
-                        <Label style={{ marginLeft: "1em" }}>
-                            {book.category}
-                        </Label>
-                        <Item.Description>
-                            {book.description}
-                        </Item.Description>
-                    </Item.Content>
-                </Item>
+                <LibraryBook
+                    key={book.id}
+                    name={book.name}
+                    author={book.author}
+                    category={book.category}
+                    rating={book.rating}>
+                </LibraryBook>
+                // <Item key={book.id}>
+                //     <Item.Image>
+                //         <Icon name="book" size="massive" fitted />
+                //     </Item.Image>
+
+                //     <Item.Content>
+                //         <Item.Header >{book.name}</Item.Header>
+                //         <Label style={{ marginLeft: "1em" }}>
+                //             {book.category}
+                //         </Label>
+                //         <Item.Description>
+                //             {book.description}
+                //         </Item.Description>
+                //     </Item.Content>
+                // </Item>
             ));
 
             component = (
-                <Item.Group as={Segment}>
-                    {items}
-                </Item.Group>
+                <Container>
+                    <Grid stackable>
+                        {items}
+                    </Grid>
+                </Container>
+
             );
         }
 
