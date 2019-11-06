@@ -6,8 +6,10 @@ import './Dashboard.css';
 
 class Dashboard extends Component {
 
-    cardClick = (e) => {
-        console.log(e);
+    cardClickHandler = (categoryText) => {
+        console.log(categoryText);
+
+        this.props.history.push('/store?category=' + categoryText);
     }
 
     render() {
@@ -18,7 +20,7 @@ class Dashboard extends Component {
                         <Card
                             fluid
                             color={category.color}
-                            onClick={() => { this.cardClick(category.text) }}>
+                            onClick={() => { this.cardClickHandler(category.text) }}>
                             <Card.Content>
                                 <Card.Header textAlign="center">
                                     {category.text}

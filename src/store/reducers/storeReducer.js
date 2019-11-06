@@ -31,7 +31,6 @@ export const filterStoreItems = (state, action) => {
     const storeItems = state.storeItems.slice();
     let pages = 0
     let items = storeItems;
-    console.log(action.filterOptions);
     if (action.filterOptions.category !== "") {
         const category = categoryOptions[action.filterOptions.category - 1].text;
         items = items.filter(

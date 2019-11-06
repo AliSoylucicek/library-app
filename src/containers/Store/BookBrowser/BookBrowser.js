@@ -16,6 +16,7 @@ import {
 
 import './BookBrowser.css';
 
+import queryString from 'query-string';
 import * as actions from '../../../store/actions/index';
 import { categoryOptions, sortOptions } from '../../../shared/filterOptions';
 import { updateObject } from '../../../shared/utility';
@@ -30,11 +31,25 @@ class BookBrowser extends Component {
             sorting: "",
             search: ""
         },
-        page: 1
+        page: 1,
+    }
+
+    constructor(props) {
+        super(props);
+        this.props.onFetchStore();
+        console.log(this.props.location.search);
+        if (this.props.location.search !== "") {
+            const params = queryString.parse(this.props.location.search);
+            const category = categoryOptions.find(c=> c.text === params.category);
+            if(category !== undefined){
+                const updatedOptions = updateObject(this.state.filterOptions, { category: category.key });
+                this.state.filterOptions = updatedOptions;
+            }
+        }
     }
 
     componentDidMount() {
-        this.props.onFetchStore();
+        this.props.onFilterBooks(this.state.filterOptions)
     }
 
     componentDidUpdate(nextProps, nextState) {
@@ -120,7 +135,7 @@ class BookBrowser extends Component {
                 />
             </Grid.Column>
         </Grid>
-        : null
+            : null
 
         return (
             <Grid as={Container} stackable>

@@ -9,7 +9,8 @@ import ErrorHeader from '../../components/UI/ErrorHeader/ErrorHeader';
 
 class MyBooks extends Component {
 
-    componentWillMount() {
+    constructor(props) {
+        super(props);
         this.props.onFetchBooks();
     }
 
@@ -22,7 +23,7 @@ class MyBooks extends Component {
             <ErrorHeader
                 icon="remove bookmark"
                 subHeader="Your books can be seen here"
-                link="Go To Shop!"
+                text="Go To Shop!"
                 onClick={this.clickHandler} />
         );
 

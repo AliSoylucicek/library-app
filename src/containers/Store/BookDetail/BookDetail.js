@@ -15,7 +15,8 @@ class BookDetail extends Component {
         book: []
     }
 
-    componentDidMount() {
+    constructor(props) {
+        super(props);
         this.props.onFetchBook(+this.props.match.params.id);
     }
 

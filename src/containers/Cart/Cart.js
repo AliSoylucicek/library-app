@@ -14,12 +14,9 @@ class Cart extends Component {
         cartItems: []
     }
 
-    componentWillMount() {
+    constructor(props) {
+        super(props);
         this.props.onFetchCart();
-    }
-
-    clickHandler = () => {
-        this.props.history.push('store/')
     }
 
     removeHandler = (book) => {
@@ -52,8 +49,8 @@ class Cart extends Component {
                     icon="shopping basket"
                     header="Oops!"
                     subHeader="Your shopping cart is empty, come back when you add some stuff!"
-                    link="Go To Shop!"
-                    onClick={this.clickHandler} />
+                    text="Go To Store!"
+                    onClick={this.toShopHandler} />
             );
         }
         let button = (

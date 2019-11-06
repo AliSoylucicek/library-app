@@ -15,7 +15,7 @@ const errorHeader = (props) => {
                         {props.subHeader}
                     </Header.Subheader>
                     <Header.Subheader >
-                    <a onClick={props.onClick} style={{cursor: "pointer"}} href={props.link}>{props.link}</a>
+                    <a onClick={props.onClick} style={{cursor: "pointer"}} href={props.href}>{props.text}</a>
                     </Header.Subheader>
                 </Header>
             </Segment>
