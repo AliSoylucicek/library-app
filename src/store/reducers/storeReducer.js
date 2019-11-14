@@ -8,8 +8,8 @@ const initialState = {
         { id: 1, name: "To Be a Murderer", author: "Alice Frederic", category: 'Horror', rating: 3, price: 6.49, description: "A book description.", purchaseState: "purchased", oldPrice: 8.49 },
         { id: 2, name: "Superman's Life", author: "M.J. Watson", category: 'Action', rating: 5, price: 9.99, description: "A book description.", purchaseState: "" },
         { id: 3, name: "The White Tower", author: "Howard Stark", category: 'Fantasy', rating: 5, price: 7.49, description: "A book description.", purchaseState: "" },
-        { id: 4, name: "The Woodcarver and the Day", author: "Pablo Escobar", category: 'Fantasy', rating: 3, price: 4.49, description: "A book description.", purchaseState: "" },
-        { id: 5, name: "The Consuming Madman", author: "Han Solo", category: 'Horror', rating: 4, price: 7.99, description: "A book description.", purchaseState: "" },
+        { id: 4, name: "The Consuming Madman", author: "Han Solo", category: 'Horror', rating: 4, price: 7.99, description: "A book description.", purchaseState: "" },
+        { id: 5, name: "The Woodcarver and the Day", author: "Pablo Escobar", category: 'Fantasy', rating: 3, price: 4.49, description: "A book description.", purchaseState: "" },
         { id: 6, name: "Mountain's Thief", author: "Gandald the White", category: 'Adventure', rating: 5, price: 12.49, description: "A book description.", purchaseState: "" },
 
     ],
